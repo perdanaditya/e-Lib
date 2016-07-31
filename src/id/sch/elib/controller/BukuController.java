@@ -85,7 +85,7 @@ public class BukuController implements BaseBeanInterface {
                     if (tempComplete.get(i).getTahunTerbit().toLowerCase().contains(param.toLowerCase())) {
                             temp.add(tempComplete.get(i));
                         }
-                }else if (column.equalsIgnoreCase("Strock")){
+                }else if (column.equalsIgnoreCase("Stock")){
                     if (tempComplete.get(i).getStock().toString().toLowerCase().contains(param.toLowerCase())) {
                             temp.add(tempComplete.get(i));
                         }

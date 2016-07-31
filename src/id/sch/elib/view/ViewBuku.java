@@ -35,16 +35,16 @@ public class ViewBuku extends javax.swing.JInternalFrame {
     private String[] columnName;
     private BukuController bukuController;
     private DefaultTableModel tableModel;
-    
-        private InputBuku inputBuku=new InputBuku();
+
+    private InputBuku inputBuku = InputBuku.getInstance(true);
 
     public ViewBuku() {
         initComponents();
         listBuku = new ArrayList<Buku>();
-        penerbitController=new PenerbitController();
-        rakBukuController=new RakBukuController();
-        listPenerbit=penerbitController.fetchData(listPenerbit, true);
-        listRakBuku= rakBukuController.fetchData(listRakBuku, true);
+        penerbitController = new PenerbitController();
+        rakBukuController = new RakBukuController();
+        listPenerbit = penerbitController.fetchData(listPenerbit, true);
+        listRakBuku = rakBukuController.fetchData(listRakBuku, true);
 //        bukuController = new BukuController();
         columnName = new String[6];
         columnName[0] = "ISBN";
@@ -73,28 +73,28 @@ public class ViewBuku extends javax.swing.JInternalFrame {
         this.username = username;
     }
 
-    public RakBuku getRakBukuById(long id){
-        int index=0;
-        while(index<listRakBuku.size()){
-            if(listRakBuku.get(index).getId()==id){
+    public RakBuku getRakBukuById(long id) {
+        int index = 0;
+        while (index < listRakBuku.size()) {
+            if (listRakBuku.get(index).getId() == id) {
                 return listRakBuku.get(index);
             }
             index++;
         }
         return null;
     }
-    
-    public Penerbit getPenerbitById(long id){
-        int index=0;
-        while(index<listPenerbit.size()){
-            if(listPenerbit.get(index).getId()==id){
+
+    public Penerbit getPenerbitById(long id) {
+        int index = 0;
+        while (index < listPenerbit.size()) {
+            if (listPenerbit.get(index).getId() == id) {
                 return listPenerbit.get(index);
             }
             index++;
         }
         return null;
     }
-    
+
     public void setTableValue() {
     }
 

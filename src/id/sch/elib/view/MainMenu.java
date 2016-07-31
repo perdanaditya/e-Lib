@@ -6,6 +6,7 @@ package id.sch.elib.view;
 
 import id.sch.elib.util.DataLibrary;
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.beans.PropertyVetoException;
 import java.io.File;
@@ -25,17 +26,19 @@ public class MainMenu extends javax.swing.JFrame {
 
     private InputBuku inputBuku;
     private LoginView loginView;
-    private TableReport tableReport;
     private ViewPenerbit viewPenerbitFrame;
     private PenggunaView penggunaView;
     private Pengaturan pengaturanView;
     private ViewPengarang pengarang;
     private ViewDonasi viewDonasi;
     private ViewPeminjaman viewPeminjaman;
+    private ViewKategoriBuku viewKategoriBuku;
+
+    private static MainMenu mainMenu;
 
     private boolean stop;
 
-    public MainMenu() {
+    private MainMenu() {
         //only for development purpose (bypass login)
 //        DataLibrary.getInstance().setUsername("admin");
 //        DataLibrary.getInstance().setRole("Administrator");
@@ -58,6 +61,13 @@ public class MainMenu extends javax.swing.JFrame {
 //        viewPeminjaman = new ViewPeminjaman();
 //        mainPane.add(viewPeminjaman);
 //        viewPeminjaman.setVisible(true);
+    }
+
+    public static MainMenu getInstance() {
+        if (mainMenu == null) {
+            mainMenu = new MainMenu();
+        }
+        return mainMenu;
     }
 
     /**
@@ -103,13 +113,14 @@ public class MainMenu extends javax.swing.JFrame {
         inputDataPenggunaMenu = new javax.swing.JMenuItem();
         viewPenerbit = new javax.swing.JMenuItem();
         viewPengarang = new javax.swing.JMenuItem();
+        rakBukuMenu = new javax.swing.JMenuItem();
         donasiMenu = new javax.swing.JMenuItem();
         optionMenu = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Library Manager SMA Negeri 1 Baleendah - Alpha Version 0.2.1");
+        setTitle("Library Manager SMA Negeri 1 Baleendah - Alpha Version 0.2.2");
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
 
@@ -354,6 +365,14 @@ public class MainMenu extends javax.swing.JFrame {
         });
         masterDataMenu.add(viewPengarang);
 
+        rakBukuMenu.setText("Rak Buku");
+        rakBukuMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rakBukuMenuActionPerformed(evt);
+            }
+        });
+        masterDataMenu.add(rakBukuMenu);
+
         donasiMenu.setText("Donasi Buku");
         donasiMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -426,24 +445,15 @@ public class MainMenu extends javax.swing.JFrame {
     private void inputDataBukuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputDataBukuMenuActionPerformed
         try {
             // TODO add your handling code here:
-            if (inputBuku == null) {
-                inputBuku = new InputBuku();
+            if (inputBuku == null || inputBuku.isClosed()) {
+                inputBuku = InputBuku.getInstance(true);
                 mainPane.add(inputBuku);
                 inputBuku.setMaximum(true);
-                inputBuku.setVisible(true);
-            } else if (inputBuku.isClosed()) {
-                inputBuku = new InputBuku();
-                mainPane.add(inputBuku);
-                inputBuku.setMaximum(true);
-                inputBuku.setVisible(true);
+                inputBuku.show();
             } else {
-                try {
-                    inputBuku.setSelected(true);
-                    if (inputBuku.isIcon()) {
-                        inputBuku.setIcon(false);
-                    }
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                inputBuku.setSelected(true);
+                if (inputBuku.isIcon()) {
+                    inputBuku.setIcon(false);
                 }
             }
         } catch (PropertyVetoException ex) {
@@ -455,24 +465,15 @@ public class MainMenu extends javax.swing.JFrame {
     private void viewPenerbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPenerbitActionPerformed
         try {
             // TODO add your handling code here:
-            if (viewPenerbitFrame == null) {
+            if (viewPenerbitFrame == null || viewPenerbitFrame.isClosed()) {
                 viewPenerbitFrame = new ViewPenerbit();
                 mainPane.add(viewPenerbitFrame);
                 viewPenerbitFrame.setMaximum(true);
-                viewPenerbitFrame.setVisible(true);
-            } else if (viewPenerbitFrame.isClosed()) {
-                viewPenerbitFrame = new ViewPenerbit();
-                mainPane.add(viewPenerbitFrame);
-                viewPenerbitFrame.setMaximum(true);
-                viewPenerbitFrame.setVisible(true);
+                viewPenerbitFrame.show();
             } else {
-                try {
-                    viewPenerbitFrame.setSelected(true);
-                    if (viewPenerbitFrame.isIcon()) {
-                        viewPenerbitFrame.setIcon(false);
-                    }
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                viewPenerbitFrame.setSelected(true);
+                if (viewPenerbitFrame.isIcon()) {
+                    viewPenerbitFrame.setIcon(false);
                 }
             }
         } catch (PropertyVetoException ex) {
@@ -483,171 +484,101 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void inputDataPenggunaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputDataPenggunaMenuActionPerformed
         // TODO add your handling code here:
-        if (penggunaView == null) {
-            try {
+        try {
+            if (penggunaView == null || penggunaView.isClosed()) {
                 penggunaView = new PenggunaView();
                 mainPane.add(penggunaView);
                 penggunaView.setMaximum(true);
-                penggunaView.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PENGGUNA-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (penggunaView.isClosed()) {
-            try {
-                penggunaView = new PenggunaView();
-                mainPane.add(penggunaView);
-                penggunaView.setMaximum(true);
-                penggunaView.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PENGGUNA-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+                penggunaView.show();
+            } else {
                 penggunaView.setSelected(true);
                 if (penggunaView.isIcon()) {
                     penggunaView.setIcon(false);
                 }
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-PENGGUNA-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inputDataPenggunaMenuActionPerformed
 
     private void optionMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionMenuActionPerformed
         // TODO add your handling code here:
-        if (pengaturanView == null) {
-            try {
+        try {
+            if (pengaturanView == null || pengaturanView.isClosed()) {
                 pengaturanView = new Pengaturan();
                 mainPane.add(pengaturanView);
                 pengaturanView.setMaximum(true);
-                pengaturanView.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PENGATURAN-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (pengaturanView.isClosed()) {
-            try {
-                pengaturanView = new Pengaturan();
-                mainPane.add(pengaturanView);
-                pengaturanView.setMaximum(true);
-                pengaturanView.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PENGATURAN-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+                pengaturanView.show();
+            } else {
                 pengaturanView.setSelected(true);
                 if (pengaturanView.isIcon()) {
                     pengaturanView.setIcon(false);
                 }
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-PENGATURAN-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_optionMenuActionPerformed
 
     private void viewPengarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPengarangActionPerformed
         // TODO add your handling code here:
-        if (pengarang == null) {
-            try {
+        try {
+            if (pengarang == null || pengarang.isClosed()) {
                 pengarang = new ViewPengarang();
                 mainPane.add(pengarang);
                 pengarang.setMaximum(true);
-                pengarang.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PENGARANG-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (pengarang.isClosed()) {
-            try {
-                pengarang = new ViewPengarang();
-                mainPane.add(pengarang);
-                pengarang.setMaximum(true);
-                pengarang.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PENGARANG-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+                pengarang.show();
+            } else {
                 pengarang.setSelected(true);
                 if (pengarang.isIcon()) {
                     pengarang.setIcon(false);
                 }
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-PENGARANG-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_viewPengarangActionPerformed
 
     private void donasiMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_donasiMenuActionPerformed
         // TODO add your handling code here:
-        if (viewDonasi == null) {
-            try {
+        try {
+            if (viewDonasi == null || viewDonasi.isClosed()) {
                 viewDonasi = new ViewDonasi();
                 mainPane.add(viewDonasi);
                 viewDonasi.setMaximum(true);
-                viewDonasi.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-DONASI-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (viewDonasi.isClosed()) {
-            try {
-                viewDonasi = new ViewDonasi();
-                mainPane.add(viewDonasi);
-                viewDonasi.setMaximum(true);
-                viewDonasi.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-DONASI-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+                viewDonasi.show();
+            } else {
                 viewDonasi.setSelected(true);
                 if (viewDonasi.isIcon()) {
                     viewDonasi.setIcon(false);
                 }
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-DONASI-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_donasiMenuActionPerformed
 
     private void inputPeminjamanMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputPeminjamanMenuActionPerformed
         // TODO add your handling code here:
-        if (viewPeminjaman == null) {
-            try {
+        try {
+            if (viewPeminjaman == null || viewPeminjaman.isClosed()) {
                 viewPeminjaman = new ViewPeminjaman();
                 mainPane.add(viewPeminjaman);
                 viewPeminjaman.setMaximum(true);
-                viewPeminjaman.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PEMINJAMAN-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (viewPeminjaman.isClosed()) {
-            try {
-                viewPeminjaman = new ViewPeminjaman();
-                mainPane.add(viewPeminjaman);
-                viewPeminjaman.setMaximum(true);
-                viewPeminjaman.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                System.out.println("VIEW-PEMINJAMAN-ERROR: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+                viewPeminjaman.show();
+            } else {
                 viewPeminjaman.setSelected(true);
                 if (viewPeminjaman.isIcon()) {
                     viewPeminjaman.setIcon(false);
                 }
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-PEMINJAMAN-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_inputPeminjamanMenuActionPerformed
 
@@ -684,6 +615,26 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "This function is not supported by current version", "Not Supported", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_profileBtnActionPerformed
+
+    private void rakBukuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rakBukuMenuActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (viewKategoriBuku == null || viewKategoriBuku.isClosed()) {
+                viewKategoriBuku = new ViewKategoriBuku();
+                mainPane.add(viewKategoriBuku);
+                viewKategoriBuku.setMaximum(true);
+                viewKategoriBuku.show();
+            } else {
+                viewKategoriBuku.setSelected(true);
+                if (viewKategoriBuku.isIcon()) {
+                    viewKategoriBuku.setIcon(false);
+                }
+            }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-KATEGORI-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_rakBukuMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -746,6 +697,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton peminjamanBtn;
     private javax.swing.JButton penggunaBtn;
     private javax.swing.JButton profileBtn;
+    protected javax.swing.JMenuItem rakBukuMenu;
     private javax.swing.JMenuItem reportAnggotaMenu;
     private javax.swing.JMenuItem reportBukuMenu;
     private javax.swing.JMenuItem reportDendaMenu;
@@ -755,7 +707,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel timeLabel;
     private javax.swing.JLabel userLabel;
     private javax.swing.JMenuItem username;
-    private javax.swing.JMenuItem viewPenerbit;
-    private javax.swing.JMenuItem viewPengarang;
+    protected javax.swing.JMenuItem viewPenerbit;
+    protected javax.swing.JMenuItem viewPengarang;
     // End of variables declaration//GEN-END:variables
 }

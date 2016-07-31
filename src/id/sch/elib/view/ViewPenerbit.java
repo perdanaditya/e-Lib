@@ -25,6 +25,8 @@ public class ViewPenerbit extends javax.swing.JInternalFrame {
     private ArrayList<String> columnName;
     private boolean editMode;
     private Penerbit penerbitModel;
+    
+    protected static boolean inputBukuMode;
 
     /**
      * Creates new form ViewPenerbit
@@ -350,6 +352,13 @@ public class ViewPenerbit extends javax.swing.JInternalFrame {
             masterPenerbitList = penerbitController.fetchData(masterPenerbitList, true);
             penerbitList = masterPenerbitList;
             setTableValue();
+            if(inputBukuMode){
+                InputBuku inputBuku = InputBuku.getInstance(false);
+                inputBuku.setPenerbitItem(false);
+                inputBuku.penerbitCmb.setSelectedIndex(masterPenerbitList.size()-1);
+                inputBukuMode = false;
+                this.dispose();
+            }
         } else {
             JOptionPane.showMessageDialog(null, "One or more field is empty, Cannot insert data", "INPUT-ERROR", 0);
         }

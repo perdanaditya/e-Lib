@@ -314,8 +314,7 @@ public class LoginView extends javax.swing.JFrame {
         String password = passwordTxt.getText();
         boolean check = userController.login(username, password);
         if (check) {
-            MainMenu mn = new MainMenu();
-            mn.setVisible(true);
+            MainMenu.getInstance().setVisible(true);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Invalid username or password, please try again", "ACCESS DENIED", 0);

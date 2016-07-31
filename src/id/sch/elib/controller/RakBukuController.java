@@ -9,10 +9,12 @@ import id.sch.elib.model.RakBuku;
 import id.sch.elib.service.RakBukuService;
 import id.sch.elib.util.BaseBeanInterface;
 import id.sch.elib.util.DataLibrary;
+import id.sch.elib.util.Message;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -54,7 +56,22 @@ public class RakBukuController implements BaseBeanInterface {
 
     @Override
     public ArrayList<RakBuku> search(Object completeList, String param, String column) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<RakBuku> temp = new ArrayList<>();
+        ArrayList<RakBuku> tempComplete = (ArrayList<RakBuku>) completeList;
+        for (int i = 0; i < tempComplete.size(); i++) {
+                if(column.equalsIgnoreCase("Nama Kategori")){
+                    if (tempComplete.get(i).getNamaJenis().toLowerCase().contains(param.toLowerCase())) {
+                            temp.add(tempComplete.get(i));
+                        }
+                }else if (column.equalsIgnoreCase("No. DDC")){
+                    if (tempComplete.get(i).getNoDdc().toLowerCase().contains(param.toLowerCase())) {
+                            temp.add(tempComplete.get(i));
+                        }
+                }else{
+                        JOptionPane.showMessageDialog(null, "Column name or search field cannot be empty", "SEARCH-ERROR", 0);
+                }
+            }
+        return temp;
     }
 
     @Override
@@ -73,6 +90,15 @@ public class RakBukuController implements BaseBeanInterface {
 
     @Override
     public String save() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Message message;
+        if (!editMode) {
+            rakBuku.setInputTime(now);
+            message = (Message) rakBukuService.save(rakBuku);
+        } else {
+            rakBuku.setInputTime(now);
+            message = (Message) rakBukuService.update(rakBuku);
+            editMode = false;
+        }
+        return message.getMessage();
     }
 }
