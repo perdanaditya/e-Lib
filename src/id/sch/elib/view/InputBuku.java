@@ -697,13 +697,13 @@ public class InputBuku extends javax.swing.JInternalFrame {
     private void addKategoriBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addKategoriBtnActionPerformed
         // TODO add your handling code here:
         ViewKategoriBuku.inputBukuMode = true;
-        MainMenu.getInstance().rakBukuMenu.doClick();
+        MainMenu.getInstance().showRakBuku();
     }//GEN-LAST:event_addKategoriBtnActionPerformed
 
     private void addPenerbitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPenerbitBtnActionPerformed
         // TODO add your handling code here:
         ViewPenerbit.inputBukuMode = true;
-        MainMenu.getInstance().viewPenerbit.doClick();
+        MainMenu.getInstance().showPenerbit();
     }//GEN-LAST:event_addPenerbitBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

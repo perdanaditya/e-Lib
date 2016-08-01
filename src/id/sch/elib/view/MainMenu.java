@@ -101,9 +101,7 @@ public class MainMenu extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         logout = new javax.swing.JMenuItem();
         masterDataMenu = new javax.swing.JMenu();
-        viewPenerbit = new javax.swing.JMenuItem();
         viewPengarang = new javax.swing.JMenuItem();
-        rakBukuMenu = new javax.swing.JMenuItem();
         donasiMenu = new javax.swing.JMenuItem();
         optionMenu = new javax.swing.JMenuItem();
 
@@ -295,14 +293,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         masterDataMenu.setText("Master Data");
 
-        viewPenerbit.setText("Data Penerbit");
-        viewPenerbit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewPenerbitActionPerformed(evt);
-            }
-        });
-        masterDataMenu.add(viewPenerbit);
-
         viewPengarang.setText("Pengarang");
         viewPengarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,14 +300,6 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         masterDataMenu.add(viewPengarang);
-
-        rakBukuMenu.setText("Rak Buku");
-        rakBukuMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rakBukuMenuActionPerformed(evt);
-            }
-        });
-        masterDataMenu.add(rakBukuMenu);
 
         donasiMenu.setText("Donasi Buku");
         donasiMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -388,13 +370,41 @@ public class MainMenu extends javax.swing.JFrame {
         return icon;
     }
 
-    private void viewPenerbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPenerbitActionPerformed
+    private int getCenteredLocation(String type) {//x:width; y:height
+        if (type.equalsIgnoreCase("x")) {
+            return (mainPane.getSize().width) / 4;
+        } else {
+            return (getSize().height - mainPane.getSize().height) / 2;
+        }
+    }
+
+    public void showRakBuku() {
+        try {
+            if (viewKategoriBuku == null || viewKategoriBuku.isClosed()) {
+                viewKategoriBuku = new ViewKategoriBuku();
+                mainPane.add(viewKategoriBuku);
+                viewKategoriBuku.setLocation(getCenteredLocation("x"), getCenteredLocation("y"));
+                viewKategoriBuku.show();
+            } else {
+                viewKategoriBuku.setSelected(true);
+                if (viewKategoriBuku.isIcon()) {
+                    viewKategoriBuku.setIcon(false);
+                }
+            }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-KATEGORI-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void showPenerbit() {
         try {
             // TODO add your handling code here:
             if (viewPenerbitFrame == null || viewPenerbitFrame.isClosed()) {
                 viewPenerbitFrame = new ViewPenerbit();
                 mainPane.add(viewPenerbitFrame);
-                viewPenerbitFrame.setMaximum(true);
+//                viewPenerbitFrame.setMaximum(true);
+                viewPenerbitFrame.setLocation(getCenteredLocation("x"), getCenteredLocation("y"));
                 viewPenerbitFrame.show();
             } else {
                 viewPenerbitFrame.setSelected(true);
@@ -406,7 +416,7 @@ public class MainMenu extends javax.swing.JFrame {
             System.out.println("INPU-PENERBIT-ERROR: " + ex.getMessage());
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_viewPenerbitActionPerformed
+    }
 
     private void optionMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionMenuActionPerformed
         // TODO add your handling code here:
@@ -551,26 +561,6 @@ public class MainMenu extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "This function is not supported by current version", "Not Supported", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_profileBtnActionPerformed
 
-    private void rakBukuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rakBukuMenuActionPerformed
-        // TODO add your handling code here:
-        try {
-            if (viewKategoriBuku == null || viewKategoriBuku.isClosed()) {
-                viewKategoriBuku = new ViewKategoriBuku();
-                mainPane.add(viewKategoriBuku);
-                viewKategoriBuku.setMaximum(true);
-                viewKategoriBuku.show();
-            } else {
-                viewKategoriBuku.setSelected(true);
-                if (viewKategoriBuku.isIcon()) {
-                    viewKategoriBuku.setIcon(false);
-                }
-            }
-        } catch (PropertyVetoException ex) {
-            System.out.println("VIEW-KATEGORI-ERROR: " + ex.getMessage());
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_rakBukuMenuActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -628,11 +618,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton peminjamanBtn;
     private javax.swing.JButton penggunaBtn;
     private javax.swing.JButton profileBtn;
-    protected javax.swing.JMenuItem rakBukuMenu;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JLabel userLabel;
     private javax.swing.JMenuItem username;
-    protected javax.swing.JMenuItem viewPenerbit;
     protected javax.swing.JMenuItem viewPengarang;
     // End of variables declaration//GEN-END:variables
 }
