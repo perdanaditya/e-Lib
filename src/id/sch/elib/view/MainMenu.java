@@ -98,19 +98,9 @@ public class MainMenu extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         username = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        inputPeminjamanMenu = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         logout = new javax.swing.JMenuItem();
-        reportMenu = new javax.swing.JMenu();
-        reportPeminjamanMenu = new javax.swing.JMenuItem();
-        reportPengembalianMenu = new javax.swing.JMenuItem();
-        reportDendaMenu = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        reportAnggotaMenu = new javax.swing.JMenuItem();
-        reportBukuMenu = new javax.swing.JMenuItem();
         masterDataMenu = new javax.swing.JMenu();
-        inputDataBukuMenu = new javax.swing.JMenuItem();
-        inputDataPenggunaMenu = new javax.swing.JMenuItem();
         viewPenerbit = new javax.swing.JMenuItem();
         viewPengarang = new javax.swing.JMenuItem();
         rakBukuMenu = new javax.swing.JMenuItem();
@@ -291,14 +281,6 @@ public class MainMenu extends javax.swing.JFrame {
         username.setText("username");
         fileMenu.add(username);
         fileMenu.add(jSeparator1);
-
-        inputPeminjamanMenu.setText("Kelola Peminjaman");
-        inputPeminjamanMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputPeminjamanMenuActionPerformed(evt);
-            }
-        });
-        fileMenu.add(inputPeminjamanMenu);
         fileMenu.add(jSeparator2);
 
         logout.setText("Log Out");
@@ -311,43 +293,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
-        reportMenu.setText("Report");
-
-        reportPeminjamanMenu.setText("Data Peminjaman");
-        reportMenu.add(reportPeminjamanMenu);
-
-        reportPengembalianMenu.setText("Data Pengembalian");
-        reportMenu.add(reportPengembalianMenu);
-
-        reportDendaMenu.setText("Data Denda");
-        reportMenu.add(reportDendaMenu);
-        reportMenu.add(jSeparator3);
-
-        reportAnggotaMenu.setText("Data Anggota");
-        reportMenu.add(reportAnggotaMenu);
-
-        reportBukuMenu.setText("Data Buku");
-        reportMenu.add(reportBukuMenu);
-
-        menuBar.add(reportMenu);
-
         masterDataMenu.setText("Master Data");
-
-        inputDataBukuMenu.setText("Data Buku");
-        inputDataBukuMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputDataBukuMenuActionPerformed(evt);
-            }
-        });
-        masterDataMenu.add(inputDataBukuMenu);
-
-        inputDataPenggunaMenu.setText("Data Pengguna");
-        inputDataPenggunaMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputDataPenggunaMenuActionPerformed(evt);
-            }
-        });
-        masterDataMenu.add(inputDataPenggunaMenu);
 
         viewPenerbit.setText("Data Penerbit");
         viewPenerbit.addActionListener(new java.awt.event.ActionListener() {
@@ -442,26 +388,6 @@ public class MainMenu extends javax.swing.JFrame {
         return icon;
     }
 
-    private void inputDataBukuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputDataBukuMenuActionPerformed
-        try {
-            // TODO add your handling code here:
-            if (inputBuku == null || inputBuku.isClosed()) {
-                inputBuku = InputBuku.getInstance(true);
-                mainPane.add(inputBuku);
-                inputBuku.setMaximum(true);
-                inputBuku.show();
-            } else {
-                inputBuku.setSelected(true);
-                if (inputBuku.isIcon()) {
-                    inputBuku.setIcon(false);
-                }
-            }
-        } catch (PropertyVetoException ex) {
-            System.out.println("VIEW-BUKU-ERROR: " + ex.getMessage());
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_inputDataBukuMenuActionPerformed
-
     private void viewPenerbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPenerbitActionPerformed
         try {
             // TODO add your handling code here:
@@ -481,26 +407,6 @@ public class MainMenu extends javax.swing.JFrame {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_viewPenerbitActionPerformed
-
-    private void inputDataPenggunaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputDataPenggunaMenuActionPerformed
-        // TODO add your handling code here:
-        try {
-            if (penggunaView == null || penggunaView.isClosed()) {
-                penggunaView = new PenggunaView();
-                mainPane.add(penggunaView);
-                penggunaView.setMaximum(true);
-                penggunaView.show();
-            } else {
-                penggunaView.setSelected(true);
-                if (penggunaView.isIcon()) {
-                    penggunaView.setIcon(false);
-                }
-            }
-        } catch (PropertyVetoException ex) {
-            System.out.println("VIEW-PENGGUNA-ERROR: " + ex.getMessage());
-            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_inputDataPenggunaMenuActionPerformed
 
     private void optionMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionMenuActionPerformed
         // TODO add your handling code here:
@@ -562,8 +468,61 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_donasiMenuActionPerformed
 
-    private void inputPeminjamanMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputPeminjamanMenuActionPerformed
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
+        stop = true;
+        DataLibrary.getInstance().setUser(null);
+        loginView = new LoginView();
+        loginView.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutActionPerformed
+
+    private void penggunaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_penggunaBtnActionPerformed
+        // TODO add your handling code here:
+//        inputDataPenggunaMenu.doClick();
+        try {
+            if (penggunaView == null || penggunaView.isClosed()) {
+                penggunaView = new PenggunaView();
+                mainPane.add(penggunaView);
+                penggunaView.setMaximum(true);
+                penggunaView.show();
+            } else {
+                penggunaView.setSelected(true);
+                if (penggunaView.isIcon()) {
+                    penggunaView.setIcon(false);
+                }
+            }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-PENGGUNA-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_penggunaBtnActionPerformed
+
+    private void bukuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bukuBtnActionPerformed
+        // TODO add your handling code here:
+//        inputDataBukuMenu.doClick();
+        try {
+            // TODO add your handling code here:
+            if (inputBuku == null || inputBuku.isClosed()) {
+                inputBuku = InputBuku.getInstance(true);
+                mainPane.add(inputBuku);
+                inputBuku.setMaximum(true);
+                inputBuku.show();
+            } else {
+                inputBuku.setSelected(true);
+                if (inputBuku.isIcon()) {
+                    inputBuku.setIcon(false);
+                }
+            }
+        } catch (PropertyVetoException ex) {
+            System.out.println("VIEW-BUKU-ERROR: " + ex.getMessage());
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bukuBtnActionPerformed
+
+    private void peminjamanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peminjamanBtnActionPerformed
+        // TODO add your handling code here:
+//        inputPeminjamanMenu.doClick();
         try {
             if (viewPeminjaman == null || viewPeminjaman.isClosed()) {
                 viewPeminjaman = new ViewPeminjaman();
@@ -580,30 +539,6 @@ public class MainMenu extends javax.swing.JFrame {
             System.out.println("VIEW-PEMINJAMAN-ERROR: " + ex.getMessage());
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_inputPeminjamanMenuActionPerformed
-
-    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        // TODO add your handling code here:
-        stop = true;
-        DataLibrary.getInstance().setUser(null);
-        loginView = new LoginView();
-        loginView.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_logoutActionPerformed
-
-    private void penggunaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_penggunaBtnActionPerformed
-        // TODO add your handling code here:
-        inputDataPenggunaMenu.doClick();
-    }//GEN-LAST:event_penggunaBtnActionPerformed
-
-    private void bukuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bukuBtnActionPerformed
-        // TODO add your handling code here:
-        inputDataBukuMenu.doClick();
-    }//GEN-LAST:event_bukuBtnActionPerformed
-
-    private void peminjamanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peminjamanBtnActionPerformed
-        // TODO add your handling code here:
-        inputPeminjamanMenu.doClick();
     }//GEN-LAST:event_peminjamanBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
@@ -675,9 +610,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton bukuBtn;
     private javax.swing.JMenuItem donasiMenu;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenuItem inputDataBukuMenu;
-    private javax.swing.JMenuItem inputDataPenggunaMenu;
-    private javax.swing.JMenuItem inputPeminjamanMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
@@ -685,7 +617,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JLabel logo;
     private javax.swing.JMenuItem logout;
     private javax.swing.JButton logoutBtn;
@@ -698,12 +629,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton penggunaBtn;
     private javax.swing.JButton profileBtn;
     protected javax.swing.JMenuItem rakBukuMenu;
-    private javax.swing.JMenuItem reportAnggotaMenu;
-    private javax.swing.JMenuItem reportBukuMenu;
-    private javax.swing.JMenuItem reportDendaMenu;
-    private javax.swing.JMenu reportMenu;
-    private javax.swing.JMenuItem reportPeminjamanMenu;
-    private javax.swing.JMenuItem reportPengembalianMenu;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JLabel userLabel;
     private javax.swing.JMenuItem username;

@@ -21,14 +21,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="inputPeminjamanMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Kelola Peminjaman"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputPeminjamanMenuActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="logout">
@@ -41,61 +33,11 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="reportMenu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Report"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="reportPeminjamanMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Data Peminjaman"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reportPengembalianMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Data Pengembalian"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reportDendaMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Data Denda"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reportAnggotaMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Data Anggota"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reportBukuMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Data Buku"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="masterDataMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Master Data"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="inputDataBukuMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Data Buku"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputDataBukuMenuActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="inputDataPenggunaMenu">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Data Pengguna"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputDataPenggunaMenuActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="viewPenerbit">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Data Penerbit"/>
