@@ -27,6 +27,7 @@ public class LoginView extends javax.swing.JFrame {
     private String username;
     private UserController userController;
     private boolean stop;
+    private FormPengunjung formPengunjung;
 
     public LoginView() {
         initComponents();
@@ -64,6 +65,7 @@ public class LoginView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         usernameTxt = new javax.swing.JTextField();
         passwordTxt = new javax.swing.JPasswordField();
+        btnPengunjung = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         time = new javax.swing.JLabel();
 
@@ -177,6 +179,13 @@ public class LoginView extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        btnPengunjung.setText("Input Pengunjung");
+        btnPengunjung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPengunjungActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -197,6 +206,10 @@ public class LoginView extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(btnPengunjung)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +226,9 @@ public class LoginView extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitBtn)
                     .addComponent(loginBtn))
-                .addGap(19, 19, 19))
+                .addGap(18, 18, 18)
+                .addComponent(btnPengunjung)
+                .addGap(4, 4, 4))
         );
 
         jPanel4.add(mainPanel);
@@ -239,7 +254,7 @@ public class LoginView extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(863, Short.MAX_VALUE)
                 .addComponent(time)
                 .addContainerGap())
         );
@@ -264,11 +279,14 @@ public class LoginView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
         );
 
         pack();
@@ -336,6 +354,12 @@ public class LoginView extends javax.swing.JFrame {
         loginBtn.doClick();
     }//GEN-LAST:event_passwordTxtActionPerformed
 
+    private void btnPengunjungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengunjungActionPerformed
+        formPengunjung = new FormPengunjung();
+        formPengunjung.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btnPengunjungActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -371,6 +395,7 @@ public class LoginView extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPengunjung;
     private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
