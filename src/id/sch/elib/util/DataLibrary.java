@@ -200,6 +200,10 @@ public class DataLibrary {
         }
         return masterPeminjamanList;
     }
+
+    public void setMasterPeminjamanList(ArrayList<Peminjaman> masterPeminjamanList) {
+        this.masterPeminjamanList = masterPeminjamanList;
+    }
     
     public void setMasterPengunjungList(ArrayList<Pengunjung> masterPengunjungList) {
         this.masterPengunjungList = masterPengunjungList;
@@ -210,10 +214,6 @@ public class DataLibrary {
             masterPengunjungList = (ArrayList<Pengunjung>) pengunjungService.listAll();
         }
         return masterPengunjungList;
-    }
-
-    public void setMasterPeminjamanList(ArrayList<Peminjaman> masterPeminjamanList) {
-        this.masterPeminjamanList = masterPeminjamanList;
     }
 
     public String getSizeScale(int scale) {
