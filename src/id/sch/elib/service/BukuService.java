@@ -10,22 +10,29 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import id.sch.elib.model.Buku;
 import id.sch.elib.util.BaseServiceInterface;
+import id.sch.elib.util.DataLibrary;
 import id.sch.elib.util.GrailsRestClient;
 import id.sch.elib.util.Message;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
  * @author rizky.aditya
  */
-public class BukuService implements BaseServiceInterface{
+public class BukuService implements BaseServiceInterface {
 
     private final Gson gson = new Gson();
-    private final GrailsRestClient grc=new GrailsRestClient();
+    private final GrailsRestClient grc = new GrailsRestClient();
     private final String endpoint = "buku";
-    
+
     @Override
     public Object listAll() {
         String json = grc.get(endpoint);
@@ -33,7 +40,7 @@ public class BukuService implements BaseServiceInterface{
         }.getType();
         List<Buku> output = gson.fromJson(json, type);
         return output;
-        
+
     }
 
     @Override
@@ -70,5 +77,42 @@ public class BukuService implements BaseServiceInterface{
         ArrayList<Buku> list = gson.fromJson(response, type);
         return list;
     }
-    
+
+    public Object export(int mode, int tahun) {
+        Message message = new Message();
+        String filename = "Laporan Daftar Buku";
+        InputStream is = grc.download(endpoint + "/exportToExcel?mode=" + mode + "&tahun=" + tahun);
+        boolean check = false;
+        try {
+            //nanti dari input stream di write ke file
+            File file = new File("./download/" + filename+".xlsx");
+            if (!file.exists()) {
+                file.createNewFile();
+            } else {
+                File folder = new File("./download");
+                File [] list = folder.listFiles();
+                ArrayList<String> sameNameFile = new ArrayList<>();
+                for (File fileTemp : list) {
+                    if (fileTemp.getName().contains(filename)) {
+                        sameNameFile.add(fileTemp.getName());
+                    }
+                }
+                file = new File("./download/Laporan Daftar Buku(" + sameNameFile.size() + ").xlsx");
+                file.createNewFile();
+            }
+            FileUtils.copyInputStreamToFile(is, file);
+            check = true;
+            
+            DataLibrary.getInstance().setLastDownloadFile(file);
+        } catch (IOException ex) {
+            Logger.getLogger(BukuService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (check) {
+            message.setMessage("success");
+        } else {
+            message.setMessage("failed");
+        }
+        return message;
+    }
 }

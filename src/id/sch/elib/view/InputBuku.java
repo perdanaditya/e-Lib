@@ -10,11 +10,18 @@ import id.sch.elib.model.Penerbit;
 import id.sch.elib.model.Pengarang;
 import id.sch.elib.model.RakBuku;
 import id.sch.elib.util.DataLibrary;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -157,6 +164,7 @@ public class InputBuku extends javax.swing.JInternalFrame {
         tableList = new javax.swing.JTable();
         deleteButton = new javax.swing.JButton();
         editButton = new javax.swing.JToggleButton();
+        exportBukuBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         isbnTxt = new javax.swing.JTextField();
@@ -251,18 +259,27 @@ public class InputBuku extends javax.swing.JInternalFrame {
             }
         });
 
+        exportBukuBtn.setText("Export Data to Excel");
+        exportBukuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportBukuBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(editButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(deleteButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(editButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exportBukuBtn))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -273,7 +290,8 @@ public class InputBuku extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteButton)
-                    .addComponent(editButton))
+                    .addComponent(editButton)
+                    .addComponent(exportBukuBtn))
                 .addContainerGap())
         );
 
@@ -706,6 +724,49 @@ public class InputBuku extends javax.swing.JInternalFrame {
         MainMenu.getInstance().showPenerbit();
     }//GEN-LAST:event_addPenerbitBtnActionPerformed
 
+    private void exportBukuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportBukuBtnActionPerformed
+        // TODO add your handling code here:
+        String message = "";
+        String[] option = {"All", "By Tahun", "Cancel"};
+        int choose = JOptionPane.showOptionDialog(null, "Export Berdasarkan", "Export Option",
+                JOptionPane.CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, option, "All");
+        if (choose == 0) {
+            message = (String) bukuController.print(BukuController.ALL_MODE);
+        } else if (choose == 1) {
+            String tahunStr = JOptionPane.showInputDialog("Masukkan Tahun :");
+            try {
+                int tahun = Integer.valueOf(tahunStr);
+                message = (String) bukuController.print(BukuController.TAHUN_MODE, tahun);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Tahun tidak valid",
+                        "ERROR:NUMBER_FORMAT_EXCEPTION", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Tahun tidak valid. " + ex.getMessage(),
+                        "ERROR:EXCEPTION", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        if (message.equals("") || !message.equals("success")) {
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan pada saat melakukan export data",
+                    "ERROR:EXPORT_TO_EXCEL", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "File Berhasi Diunduh",
+                    "SUCCESS:EXPORT_TO_EXCEL", JOptionPane.INFORMATION_MESSAGE);
+            if (!Desktop.isDesktopSupported()) {
+                JOptionPane.showMessageDialog(null, "Canot open file, this function is not supported by current version",
+                        "Not Supported", JOptionPane.INFORMATION_MESSAGE);
+            } else if (DataLibrary.getInstance().getLastDownloadFile().exists()) {
+                try {
+                    Desktop desktop = Desktop.getDesktop();
+                    desktop.open(DataLibrary.getInstance().getLastDownloadFile());
+                } catch (IOException ex) {
+                    Logger.getLogger(InputBuku.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_exportBukuBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addKategoriBtn;
     private javax.swing.JButton addPenerbitBtn;
@@ -713,6 +774,7 @@ public class InputBuku extends javax.swing.JInternalFrame {
     private javax.swing.JButton cancel;
     private javax.swing.JButton deleteButton;
     private javax.swing.JToggleButton editButton;
+    private javax.swing.JButton exportBukuBtn;
     private javax.swing.JLabel image;
     private javax.swing.JTextField isbnTxt;
     private javax.swing.JLabel jLabel1;

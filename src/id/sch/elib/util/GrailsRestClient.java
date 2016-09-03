@@ -363,23 +363,21 @@ public class GrailsRestClient implements Serializable {
 
     public InputStream download(String path) {
         try {
-//            LoggingUtil.INFO("Masuk download Dengan Path " + path);
             Client client = Client.create();
             WebResource webResource = client.resource(url + path);
             ClientResponse response = webResource
-                    .header("X-Auth-Token", this.getToken())
+//                    .header("X-Auth-Token", this.getToken())
                     .get(ClientResponse.class);
             if (response.getStatus() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : "
                         + response.getStatus());
             }
             if (response.getEntityInputStream() == null) {
-//                LoggingUtil.INFO("Download untuk " + path + " menghasil kan null");
+            JOptionPane.showMessageDialog(null, "DOWNLOAD-ERROR: " + path + "IS NULL", "DOWNLOAD-ERROR", 0);
             }
             return response.getEntityInputStream();
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(null, "DOWNLOAD-ERROR: " + e.getMessage(), "DOWNLOAD-ERROR", 0);
-//            LoggingUtil.SEVERE("Error download file", e);
         }
         return null;
     }

@@ -221,7 +221,6 @@ public class ViewPeminjaman extends javax.swing.JInternalFrame {
         stockLbl = new javax.swing.JLabel();
         deleteDetailBtn = new javax.swing.JButton();
         progressLbl = new javax.swing.JLabel();
-        perpanjangBtn = new javax.swing.JButton();
         resetBtn = new javax.swing.JButton();
         submitBtn = new javax.swing.JButton();
         progressNoIndukLbl = new javax.swing.JLabel();
@@ -317,8 +316,6 @@ public class ViewPeminjaman extends javax.swing.JInternalFrame {
 
         progressLbl.setText("jLabel11");
 
-        perpanjangBtn.setText("Extend Duration");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -355,10 +352,9 @@ public class ViewPeminjaman extends javax.swing.JInternalFrame {
                                         .addComponent(stockLbl)
                                         .addComponent(kategoriLbl)))
                                 .addComponent(progressLbl))
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addContainerGap(97, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(perpanjangBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(deleteDetailBtn)
                         .addContainerGap())))
         );
@@ -395,9 +391,7 @@ public class ViewPeminjaman extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteDetailBtn)
-                    .addComponent(perpanjangBtn)))
+                .addComponent(deleteDetailBtn))
         );
 
         resetBtn.setText("Reset");
@@ -862,7 +856,6 @@ public class ViewPeminjaman extends javax.swing.JInternalFrame {
     private javax.swing.JLabel namaLbl;
     private javax.swing.JTextField noIndukTxt;
     private javax.swing.JLabel penerbitLbl;
-    private javax.swing.JButton perpanjangBtn;
     private javax.swing.JLabel progressLbl;
     private javax.swing.JLabel progressNoIndukLbl;
     private javax.swing.JButton resetBtn;

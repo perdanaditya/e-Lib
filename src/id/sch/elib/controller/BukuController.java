@@ -34,7 +34,12 @@ public class BukuController implements BaseBeanInterface {
 
     private ArrayList<Penerbit> penerbitList;
     private ArrayList<RakBuku> rakBukuList;
-
+    
+    public static final int ALL_MODE = 0;
+    public static final int TAHUN_MODE = 1;
+    private int selectedMode;
+    private int tahun;
+    
     private boolean editMode;
 
     Timestamp now = new Timestamp(new Date().getTime());
@@ -121,27 +126,29 @@ public class BukuController implements BaseBeanInterface {
     @Override
     public ArrayList<Buku> fetchData(Object target, boolean init) {
         target = DataLibrary.getInstance().getMasterListBuku(init);
-        ArrayList<Buku> temp = (ArrayList<Buku>) target;
-        for (int i = 0; i < temp.size(); i++) {
-            if (!temp.get(i).getActive()) {
-                temp.remove(temp.get(i));
-                i--;
-            }
-        }
-        return temp;
+        return (ArrayList<Buku>) target;
     }
 
     //CUSTOM METHOD
 
     public ArrayList<RakBuku> populateRakBukuList(boolean init) {
         rakBukuList = DataLibrary.getInstance().getMasterListRakBuku(init);
-        for (int i = 0; i < rakBukuList.size(); i++) {
-            if (!rakBukuList.get(i).isActive()) {
-                rakBukuList.remove(rakBukuList.get(i));
-                i--;
-            }
-        }
         return rakBukuList;
     }
 
+    public Object print(int mode){
+        selectedMode = mode;
+        return exportExcel();
+    }
+    
+    public Object print (int mode, int tahun){
+        selectedMode = mode;
+        this.tahun = tahun;
+        return exportExcel();
+    }
+    
+    private Object exportExcel(){
+        Message message = (Message) bukuService.export(selectedMode, tahun);
+        return message.getMessage();
+    }
 }

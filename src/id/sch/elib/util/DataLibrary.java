@@ -29,6 +29,7 @@ import id.sch.elib.service.RoleService;
 import id.sch.elib.service.SumberBukuService;
 import id.sch.elib.service.UserRoleService;
 import id.sch.elib.service.UserService;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +58,8 @@ public class DataLibrary {
     private static final PenggunaService penggunaService = new PenggunaService();
     private static final PeminjamanService peminjamanService = new PeminjamanService();
 
+    private File lastDownloadFile;
+    
     private ArrayList<Penerbit> masterListPenerbit;
     private ArrayList<RakBuku> masterListRakBuku;
     private ArrayList<Buku> masterListBuku;
@@ -228,4 +231,11 @@ public class DataLibrary {
         return dateStr;
     }
 
+    public File getLastDownloadFile() {
+        return lastDownloadFile;
+    }
+
+    public void setLastDownloadFile(File lastDownloadFile) {
+        this.lastDownloadFile = lastDownloadFile;
+    }
 }
