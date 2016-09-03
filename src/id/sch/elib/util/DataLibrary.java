@@ -12,6 +12,7 @@ import id.sch.elib.model.Peminjaman;
 import id.sch.elib.model.Penerbit;
 import id.sch.elib.model.Pengarang;
 import id.sch.elib.model.Pengguna;
+import id.sch.elib.model.Pengunjung;
 import id.sch.elib.model.RakBuku;
 import id.sch.elib.model.Role;
 import id.sch.elib.model.SumberBuku;
@@ -24,6 +25,7 @@ import id.sch.elib.service.PeminjamanService;
 import id.sch.elib.service.PenerbitService;
 import id.sch.elib.service.PengarangService;
 import id.sch.elib.service.PenggunaService;
+import id.sch.elib.service.PengunjungService;
 import id.sch.elib.service.RakBukuService;
 import id.sch.elib.service.RoleService;
 import id.sch.elib.service.SumberBukuService;
@@ -57,6 +59,7 @@ public class DataLibrary {
     private static final SumberBukuService sumberBukuService = new SumberBukuService();
     private static final PenggunaService penggunaService = new PenggunaService();
     private static final PeminjamanService peminjamanService = new PeminjamanService();
+    private static final PengunjungService pengunjungService = new PengunjungService();
 
     private File lastDownloadFile;
     
@@ -72,6 +75,7 @@ public class DataLibrary {
     private ArrayList<SumberBuku> masterSumberBukuList;
     private ArrayList<Pengguna> masterPenggunaList;
     private ArrayList<Peminjaman> masterPeminjamanList;
+    private ArrayList<Pengunjung> masterPengunjungList;
 
     private static DataLibrary dataLibrary;
 
@@ -202,6 +206,17 @@ public class DataLibrary {
 
     public void setMasterPeminjamanList(ArrayList<Peminjaman> masterPeminjamanList) {
         this.masterPeminjamanList = masterPeminjamanList;
+    }
+    
+    public void setMasterPengunjungList(ArrayList<Pengunjung> masterPengunjungList) {
+        this.masterPengunjungList = masterPengunjungList;
+    }
+    
+    public ArrayList<Pengunjung> getMasterPengunjungList(boolean init) {
+        if (masterPengunjungList == null || init) {
+            masterPengunjungList = (ArrayList<Pengunjung>) pengunjungService.listAll();
+        }
+        return masterPengunjungList;
     }
 
     public String getSizeScale(int scale) {

@@ -54,7 +54,7 @@ public class InputBuku extends javax.swing.JInternalFrame {
 
     private static InputBuku inputBuku;
 
-    private InputBuku() {
+    InputBuku() {
         initComponents();
         reInitValiables();
 
