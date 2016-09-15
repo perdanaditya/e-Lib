@@ -84,13 +84,17 @@ public class BukuService implements BaseServiceInterface {
         InputStream is = grc.download(endpoint + "/exportToExcel?mode=" + mode + "&tahun=" + tahun);
         boolean check = false;
         try {
-            //nanti dari input stream di write ke file
+            //buat directory kalo directory nya ga ada
+            File dir = new File("./download");
+            if(!dir.isDirectory()){
+                dir.mkdir();
+            }
+            
             File file = new File("./download/" + filename+".xlsx");
             if (!file.exists()) {
                 file.createNewFile();
             } else {
-                File folder = new File("./download");
-                File [] list = folder.listFiles();
+                File [] list = dir.listFiles();
                 ArrayList<String> sameNameFile = new ArrayList<>();
                 for (File fileTemp : list) {
                     if (fileTemp.getName().contains(filename)) {
