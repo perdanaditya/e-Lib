@@ -149,6 +149,7 @@ public class BukuController implements BaseBeanInterface {
     
     private Object exportExcel(){
         Message message = (Message) bukuService.export(selectedMode, tahun);
+        tahun = 0;
         return message.getMessage();
     }
 }
